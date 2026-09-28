@@ -42,8 +42,8 @@ public class PerformanceMetrics {
                 return;
             }
 
-            this.influxDBClient = InfluxDBClientFactory.create(url, token.toCharArray(), org, bucket);
-            this.writeApi = influxDBClient.getWriteApi(com.influxdb.client.domain.WritePrecision.MS);
+            this.influxDBClient = InfluxDBClientFactory.create(url, token.toCharArray(), org);
+            this.writeApi = influxDBClient.getWriteApi(WritePrecision.MS);
             logger.info("Connected to InfluxDB: " + url);
         } catch (Exception e) {
             logger.error("Failed to initialize InfluxDB client", e);
@@ -106,13 +106,13 @@ public class PerformanceMetrics {
         }
 
         try {
-            Point.Builder pointBuilder = Point.measurement(metricName)
+            Point point = Point.measurement(metricName)
                     .time(Instant.now(), WritePrecision.MS);
 
-            tags.forEach(pointBuilder::addTag);
-            fields.forEach(pointBuilder::addField);
+            tags.forEach(point::addTag);
+            fields.forEach(point::addField);
 
-            writeApi.writePoint(bucket, org, pointBuilder.build());
+            writeApi.writePoint(bucket, org, point);
             logger.debug("Sent metric to InfluxDB: " + metricName);
         } catch (Exception e) {
             logger.error("Failed to send metric to InfluxDB", e);
