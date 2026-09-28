@@ -82,15 +82,15 @@ public class PerformanceMetrics {
             Point point = Point.measurement("performance")
                     .addTag("test_name", testName)
                     .addTag("environment", "cucumberbdd")
-                    .addField("total_requests", responses.size())
-                    .addField("error_count", errors)
+                    .addField("total_requests", (long) responses.size())
+                    .addField("error_count", (long) errors)
                     .addField("error_rate", errorRate)
                     .addField("avg_response_time", avgTime)
                     .addField("min_response_time", minTime)
                     .addField("max_response_time", maxTime)
                     .addField("p95_response_time", p95Time)
-                    .addField("active_threads", threadCount)
-                    .addField("throughput", responses.size() / 300.0)  // Assuming 5-minute test
+                    .addField("active_threads", (long) threadCount)
+                    .addField("throughput", responses.size() / 300.0)
                     .time(Instant.now(), WritePrecision.MS);
 
             writeApi.writePoint(bucket, org, point);
@@ -109,8 +109,20 @@ public class PerformanceMetrics {
             Point point = Point.measurement(metricName)
                     .time(Instant.now(), WritePrecision.MS);
 
-            tags.forEach(point::addTag);
-            fields.forEach(point::addField);
+            for (Map.Entry<String, String> tag : tags.entrySet()) {
+                point.addTag(tag.getKey(), tag.getValue());
+            }
+
+            for (Map.Entry<String, Object> field : fields.entrySet()) {
+                Object value = field.getValue();
+                if (value instanceof Number) {
+                    point.addField(field.getKey(), ((Number) value).doubleValue());
+                } else if (value instanceof Boolean) {
+                    point.addField(field.getKey(), (Boolean) value);
+                } else if (value instanceof String) {
+                    point.addField(field.getKey(), (String) value);
+                }
+            }
 
             writeApi.writePoint(bucket, org, point);
             logger.debug("Sent metric to InfluxDB: " + metricName);
