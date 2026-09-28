@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.Scenario;
 import io.restassured.response.Response;
+import com.performance.testing.config.PerformanceMetrics;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
