@@ -1,0 +1,47 @@
+# Maven build artifacts
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# JMeter artifacts
+*.jmx~
+*.jtl
+*.csv
+jmeter.log
+jmeter-results/
+jmeter-report/
+
+# InfluxDB / Grafana credentials
+src/test/jmeter/influxdb.token
+.env
+.env.local
+*.token
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Gradle (if used alongside Maven)
+.gradle/
+build/
+
+# OS specific
+.DS_Store
+Thumbs.db
+*.log
+
+# Test results
+test-results/
+coverage/
+
+# Node modules (if using npm plugins)
+node_modules/
