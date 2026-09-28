@@ -1,3 +1,4 @@
+@performance
 Feature: ReqRes API Peak Load Test
 
   Background:

@@ -1,3 +1,4 @@
+@performance
 Feature: ReqRes API Baseline Load Test
 
   Background:
