@@ -43,7 +43,7 @@ public class PerformanceMetrics {
             }
 
             this.influxDBClient = InfluxDBClientFactory.create(url, token.toCharArray(), org);
-            this.writeApi = influxDBClient.getWriteApi(WritePrecision.MS);
+            this.writeApi = influxDBClient.getWriteApi();
             logger.info("Connected to InfluxDB: " + url);
         } catch (Exception e) {
             logger.error("Failed to initialize InfluxDB client", e);
