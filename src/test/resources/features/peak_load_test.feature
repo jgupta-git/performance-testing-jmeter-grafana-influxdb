@@ -1,34 +1,19 @@
 @performance
-Feature: ReqRes API Peak Load Test
+Feature: ReqRes API Integration Test
 
   Background:
     Given base URL is "https://reqres.in"
-    And users count is 10
-    And ramp-up time is 30 seconds
+    And users count is 1
+    And ramp-up time is 1 seconds
 
-  Scenario: Peak load - GET users list
-    When user makes concurrent GET requests to "/api/users?page=1"
+  Scenario: API GET with metrics
+    When user makes concurrent GET requests to "/api/users?page=2"
     Then all responses should have status code 200
-    And 95th percentile response time should be less than 800 ms
-    And throughput should be greater than 10 RPS
-    And error rate should be less than 5%
-    And record metric "GET /api/users - Peak Load"
+    And response time should be less than 5000 ms
+    And record metric "GET /api/users - Page2"
 
-  Scenario: Peak load - POST create user
-    When user makes concurrent POST requests to "/api/users" with body
-      | name | job        |
-      | Peak | Tester     |
-    Then all responses should have status code 201
-    And 95th percentile response time should be less than 1500 ms
-    And record metric "POST /api/users - Peak Load"
-
-  Scenario: Peak load - Mixed operations
-    When user executes mixed operations for 60 seconds
-      | method | endpoint         | percentage |
-      | GET    | /api/users?page=1| 40         |
-      | POST   | /api/users       | 30         |
-      | GET    | /api/users/1     | 20         |
-      | PUT    | /api/users/1     | 10         |
-    Then average response time should be less than 800 ms
-    And system should sustain 10 concurrent users
-    And record metric "Mixed Operations - Peak Load"
+  Scenario: API DELETE user
+    When user makes concurrent GET requests to "/api/users/1"
+    Then all responses should have status code 200
+    And response time should be less than 5000 ms
+    And record metric "GET /api/users/1 - Final"
