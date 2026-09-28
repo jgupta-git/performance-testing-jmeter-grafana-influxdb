@@ -66,6 +66,54 @@ public class ApiPerformanceSteps {
         makeConcurrentRequests(endpoint, "PUT", data);
     }
 
+    @When("user executes mixed operations for {int} seconds")
+    public void executeMixedOperations(int duration, List<Map<String, String>> operations) {
+        testStartTime = System.currentTimeMillis();
+        ExecutorService executor = Executors.newFixedThreadPool(userCount);
+        CountDownLatch latch = new CountDownLatch(userCount);
+        long endTime = System.currentTimeMillis() + (duration * 1000);
+
+        for (int i = 0; i < userCount; i++) {
+            executor.execute(() -> {
+                try {
+                    while (System.currentTimeMillis() < endTime) {
+                        for (Map<String, String> op : operations) {
+                            String method = op.get("method");
+                            String endpoint = op.get("endpoint");
+                            String percentStr = op.get("percentage");
+
+                            int percentage = Integer.parseInt(percentStr);
+                            if (Math.random() * 100 < percentage) {
+                                long startTime = System.currentTimeMillis();
+                                Response response = executeRequest(endpoint, method, null);
+                                responses.add(response);
+                                responseTimes.add(System.currentTimeMillis() - startTime);
+
+                                if (response.getStatusCode() >= 400) {
+                                    errorCount++;
+                                }
+                                Thread.sleep(100);
+                            }
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            executor.shutdown();
+        }
+        testEndTime = System.currentTimeMillis();
+    }
+
     private void makeConcurrentRequests(String endpoint, String method, Map<String, String> body) {
         testStartTime = System.currentTimeMillis();
         ExecutorService executor = Executors.newFixedThreadPool(userCount);
