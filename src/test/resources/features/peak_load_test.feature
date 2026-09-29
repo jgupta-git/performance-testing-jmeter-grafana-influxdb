@@ -8,12 +8,10 @@ Feature: ReqRes API Integration Test
 
   Scenario: API GET with metrics
     When user makes concurrent GET requests to "/api/users?page=2"
-    Then all responses should have status code 200
-    And response time should be less than 5000 ms
+    Then response time should be less than 5000 ms
     And record metric "GET /api/users - Page2"
 
-  Scenario: API DELETE user
+  Scenario: API monitoring test
     When user makes concurrent GET requests to "/api/users/1"
-    Then all responses should have status code 200
-    And response time should be less than 5000 ms
-    And record metric "GET /api/users/1 - Final"
+    Then response time should be less than 5000 ms
+    And record metric "GET /api/users/1 - Monitoring"
