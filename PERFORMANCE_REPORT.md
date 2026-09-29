@@ -192,6 +192,14 @@ This report details the performance testing results of a Cucumber BDD-based API 
    - Shows avg, min, max, p95
    - Highlights outliers
 
+### Dashboard Screenshots
+
+**Grafana Dashboard with Live Metrics:**
+![Grafana Performance Dashboard](docs/screenshots/grafana-dashboard.png)
+
+**InfluxDB Data Explorer:**
+![InfluxDB Data Explorer](docs/screenshots/influxdb-explorer.png)
+
 ---
 
 ## Key Findings

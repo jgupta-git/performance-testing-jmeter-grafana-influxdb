@@ -28,7 +28,7 @@ Cucumber 7.14.0 | RestAssured 5.3.2 | InfluxDB Cloud | Grafana Cloud | ReqRes AP
 | **Avg Response Time** | 786 ms (1-user) / 177 ms (10-user) |
 | **Throughput** | 0.0033 - 0.033 req/s |
 
-**📈 [Full Performance Report →](PERFORMANCE_REPORT.md)**
+**📈 [Full Performance Report](PERFORMANCE_REPORT.md)**
 
 ### Grafana Dashboards
 - **Real-Time Metrics** — Throughput, success rate, error rate, response times
@@ -435,29 +435,6 @@ mvn clean test
 
 ---
 
-## Performance Optimization Tips
-
-1. **Optimize Response Time:**
-   - Increase server resources
-   - Cache frequently accessed data
-   - Use CDN for static content
-
-2. **Increase Throughput:**
-   - Connection pooling
-   - Parallel request processing
-   - Load balancing across instances
-
-3. **Reduce Errors:**
-   - Add retry logic for transient failures
-   - Monitor system resource limits
-   - Implement circuit breaker patterns
-
-4. **Scale Load Testing:**
-   - Increase thread count gradually
-   - Test on staging environment
-   - Monitor system metrics during test
-
----
 
 ## References
 
