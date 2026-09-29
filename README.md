@@ -14,6 +14,30 @@ Cucumber 7.14.0 | RestAssured 5.3.2 | InfluxDB Cloud | Grafana Cloud | ReqRes AP
 **Metrics Storage:** InfluxDB Cloud (30-day free tier)  
 **Visualization:** Grafana Cloud (unlimited free dashboards)
 
+---
+
+## 📊 Live Results & Dashboards
+
+**Latest Test Results:** 8 test runs across 2026-09-28 to 2026-09-29
+
+| Metric | Result |
+|--------|--------|
+| **Tests Passed** | 8/8 (100%) ✅ |
+| **Error Rate** | 0% |
+| **Success Rate** | 100% ✅ |
+| **Avg Response Time** | 786 ms (1-user) / 177 ms (10-user) |
+| **Throughput** | 0.0033 - 0.033 req/s |
+
+**📈 [Full Performance Report →](PERFORMANCE_REPORT.md)**
+
+### Grafana Dashboards
+- **Real-Time Metrics** — Throughput, success rate, error rate, response times
+- **Test Results Table** — Detailed metrics per test run
+- **Trend Analysis** — Performance over time
+- **Live Access:** https://cordialmustard1705.grafana.net
+
+---
+
 ## Test Scenarios (2 Load Profiles)
 
 ### Baseline Load Test (10 users)
